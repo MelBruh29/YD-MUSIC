@@ -1,0 +1,33 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <img src="assets/img/logo2.PNG" class="logo" alt="Logo" />
+    <h2 class="ion-text-center">Inicia sesión</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <p class="error" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        Ingresa un email válido.
+      </p>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <p class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        La contraseña es obligatoria.
+      </p>
+
+      <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">
+        Iniciar sesión
+      </ion-button>
+    </form>
+
+    <ion-button fill="clear" (click)="goToRegister()">
+  ¿No tienes cuenta? Regístrate
+</ion-button>
+
+  </div>
+</ion-content>

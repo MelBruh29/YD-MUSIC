@@ -1,0 +1,47 @@
+<ion-content class="intro-container" fullscreen>
+  <swiper-container
+    [slides-per-view]="1"
+    [pagination]="true"
+    [space-between]="10"
+    [loop]="false"
+    class="intro-slider"
+  >
+    <!-- Slide 1 -->
+    <swiper-slide>
+      <div class="slide-content">
+        <img src="assets/img/logo2.PNG" alt="slide1" class="slide-img" />
+        <h2>Bienvenido</h2>
+        <p>Explora la mejor música personalizada para ti.</p>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 2 -->
+    <swiper-slide>
+      <div class="slide-content">
+        <img src="assets/img/logo2.PNG" alt="slide2" class="slide-img" />
+        <h2>Playlists únicas</h2>
+        <p>Encuentra listas creadas para cada momento del día.</p>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 3 -->
+    <swiper-slide>
+      <div class="slide-content">
+        <img src="assets/img/logo2.PNG" alt="slide3" class="slide-img" />
+        <h2>Escucha sin límites</h2>
+        <p>Tu música favorita, sin interrupciones ni límites.</p>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 4 (última) -->
+    <swiper-slide>
+      <div class="slide-content">
+        <img src="assets/img/logo2.PNG" alt="slide4" class="slide-img" />
+        <h2>¡Comencemos!</h2>
+        <ion-button expand="block" color="primary" (click)="finalizarIntro()">
+          Ir al Home
+        </ion-button>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</ion-content>

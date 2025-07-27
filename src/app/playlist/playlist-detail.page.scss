@@ -1,0 +1,37 @@
+ion-content {
+  --background: #121212;
+  color: #fff;
+}
+
+.playlist-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.playlist-cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.playlist-info h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+ion-item {
+  --background: #1e1e1e;
+  --border-color: transparent;
+  margin-bottom: 5px;
+  border-radius: 8px;
+}
+
+.play-icon {
+  font-size: 24px;
+  color: #1db954; /* Verde estilo Spotify */
+}
+

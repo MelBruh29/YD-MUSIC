@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/heroes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ heroe?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding" *ngIf="heroe">
+    <div class="heroe-detalle">
+      <ion-img [src]="heroe.img" alt="Imagen de {{ heroe.nombre }}" class="img-heroe-detalle"></ion-img>
+      <div>
+        <h2>{{ heroe.nombre }}</h2>
+        <p>{{ heroe.bio }}</p>
+        <p><strong>Aparición:</strong> {{ heroe.aparicion }}</p>
+        <p><strong>Casa:</strong>
+          <img *ngIf="heroe.casa === 'DC'" src="assets/img/dc-logo.png" alt="Logo DC" class="img-casa">
+          <img *ngIf="heroe.casa === 'Marvel'" src="assets/img/marvel-logo.png" alt="Logo Marvel" class="img-casa">
+        </p>
+        <ion-button expand="block" fill="clear" (click)="regresar()">Regresar a Héroes</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

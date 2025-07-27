@@ -1,0 +1,38 @@
+<ion-app>
+  <!-- Mostrar menú y navbar solo si NO es intro ni login -->
+  <ng-container *ngIf="!isIntroPage && !isLoginPage && !isRegisterPage">
+
+    <!-- MENU LATERAL -->
+    <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar color="dark" class="menu-header">
+          <div class="menu-logo-container">
+            <img src="assets/img/logo2.PNG" alt="YD MUSIC" class="logo" />
+            <h1 class="menu-title">YD MUSIC</h1>
+          </div>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle autoHide="false" *ngFor="let p of appPages">
+            <ion-item [routerLink]="p.url" routerLinkActive="selected">
+              <ion-icon [name]="p.icon" slot="start"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="ion-page" id="main-content">
+      <app-navbar></app-navbar>
+      <ion-router-outlet></ion-router-outlet>
+    </div>
+  </ng-container>
+  
+<ng-container *ngIf="isIntroPage || isLoginPage || isRegisterPage">
+    <ion-router-outlet></ion-router-outlet>
+  </ng-container>
+</ion-app>

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ playlistName || 'Playlist' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="songs.length > 0; else noSongs">
+    <ion-item *ngFor="let song of songs">
+      <ion-label>
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.artist }}</p>
+      </ion-label>
+      <ion-button fill="clear" color="primary" slot="end">
+        {{ song.duration }}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noSongs>
+    <p>No hay canciones disponibles.</p>
+  </ng-template>
+</ion-content>

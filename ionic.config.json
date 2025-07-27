@@ -1,0 +1,7 @@
+{
+  "name": "superheroe-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

@@ -1,0 +1,21 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+:root {
+  --color-claro: rgb(8, 243, 47);
+  --color-oscuro: rgb(255, 0, 0);
+  --color-acento: #836969;
+  --espaciado-base: 1rem;
+  --espaciado-grande: 2rem;
+  --intro-slide-bg: #f9f9f9;
+  --intro-title-color: #222;
+  --intro-text-color: #666;
+}
+
+.button {
+  padding: var(--espaciado-base);
+}
+
+ion-card {
+  padding: var(--espaciado-base);
+  background-color: var(--color-claro);
+}

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Resultados de Búsqueda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <div *ngIf="heroes.length === 0 && termino" class="ion-text-center ion-margin-top">
+      <ion-note>No se encontraron resultados para el término: <strong>"{{ termino }}"</strong></ion-note>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let heroe of heroes; let i = index">
+          <ion-card>
+            <ion-img [src]="heroe.img" alt="Imagen de {{ heroe.nombre }}"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{ heroe.nombre }}</ion-card-title>
+              <ion-card-subtitle>{{ heroe.aparicion }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ heroe.bio | slice:0:100 }}...</p>
+              <ion-button expand="block" fill="outline" (click)="verHeroe(heroe.idx!)">Ver más</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+</ion-content>
