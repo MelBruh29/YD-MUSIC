@@ -1,188 +1,68 @@
-<ion-content [fullscreen]="true" class="ion-padding">
-  <!-- Contenido de home -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Music App</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="CambiarColor()">
+        <ion-icon name="color-palette-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- STORAGE -->
-  <div>
-    <h3>ionic Storage</h3>
-    <div [style.background--color]="colorActual">
-      <p>Team Actual: {{ colorActual == colorOscuro ? 'oscuro' : 'claro' }}</p>
-    </div>
-  </div>
+<!-- ❌ ELIMINAR esta línea suelta que causa el error -->
+<!-- <ion-card (click)="openArtist(artists)"> -->
 
-  <!-- TEMA -->
-  <div [style.background-Color]="colorActual">
-    AAAAA
-  </div>
-  <ion-button expand="block" color="tertiary" (click)="goToIntro()">
-    Ver Intro
-  </ion-button>
+<ion-content [style.background]="colorActual" fullscreen>
 
-  <ion-button (click)="CambiarColor()">
-    Cambiar tema y guarda
-  </ion-button>
+  <!-- REFRESH -->
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <h2 class="section-title">¿Qué deseas escuchar hoy?</h2>
-  <h1 class="section-title">Tenemos lo mejor para el momento</h1>
-
-  <!-- Swiper principal -->
-
-
-  <swiper-container slides-per-view="3" space-between="20">
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Eternal Vibes</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Sonidos relajantes y atmósferas.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Urban Flow</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Los mejores beats del hip-hop actual.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Classics</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Clásicos de todos los tiempos.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Indie Dreams</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p> Explora el indie más creativo visto.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Chill Beats</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p> Perfecto para concentrarte o relajarte.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Rock</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Rockd que marcaron generaciones.</p>
+  <!-- SLIDER DE ARTISTAS -->
+  <div class="section-title">Artistas</div>
+  <swiper-container slides-per-view="3" space-between="10" loop="true" class="artist-slider">
+    <swiper-slide *ngFor="let artist of artists">
+      <!-- ✅ AQUÍ es donde debe ir el click con artista individual -->
+      <div class="artist-card" (click)="openArtist(artist)">
+        <img [src]="artist.image || 'assets/img/default-artist.png'" [alt]="artist.name">
+        <div class="artist-name">{{ artist.name }}</div>
       </div>
     </swiper-slide>
   </swiper-container>
 
-  <swiper-container slides-per-view="3" space-between="20">
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Colombia Vive</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>las mejores sensaciones colombianas.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Electronic </p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p> Beats electrónicos para tu día. </p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Romanticos</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Baladas y temas románticos.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Soundtracks</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Bandas sonoras que inspiran . </p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Jazz & Blues</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>El mejor jazz y blues de todos los tiempos.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Reggae Vibes'</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Buenas vibras con el mejor reggae</p>
-      </div>
-    </swiper-slide>
-  </swiper-container>
+  <!-- TOP TRACKS -->
+  <div class="section-title">Top Tracks</div>
+  <ion-list>
+    <ion-item *ngFor="let track of topTracks">
+      <ion-label>
+        <h2>{{ track.name }}</h2>
+        <p>{{ track.album || 'Álbum desconocido' }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="danger" (click)="toggleFavorite(track)">
+          {{ isFavorite(track) ? '❤️' : '🤍' }}
+</ion-button>
+        <ion-button fill="clear" color="primary" (click)="playTrack(track)">
+         {{ currentTrack?.id === track.id && isPlaying ? '⏸️' : '▶️' }}
+</ion-button>
 
-
-  <swiper-container slides-per-view="3" space-between="20">
-    <swiper-slide>
-      <div class="slide-content">
-        <p>pasion</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Baladas románticas especiales.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Pop Latino Hits</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Lo mejor del español de los últimos años.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>RAP</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>el ritmo de la calle en tus manos.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Ritmo Caribeño</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>Salsa, merengue y bachata.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p>Alma mexicana</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p>  Rancheras que llegan al corazón.</p>
-      </div>
-    </swiper-slide>
-    <swiper-slide>
-      <div class="slide-content">
-        <p> Reggeton</p>
-        <img src="assets/img/logo2.PNG" alt="Logo 2" class="slide-image">
-        <p> para los buenos momentos. </p>
-      </div>
-    </swiper-slide>
-  </swiper-container>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" *ngFor="let playlist of playlists" (click)="goToPlaylist(playlist)">
-        <ion-card>
-          <img [src]="playlist.image" />
-          <ion-card-header>
-            <ion-card-title>{{ playlist.name }}</ion-card-title>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-<!--<div>
-<p class= "ion-text-center"> texto </p>
-   <p class= "ion-text-left ion-text-uppercase"> texto a la izquierda</p>
-  <p class= "ion-text-right ion-text-capitalize"> texto</p>
-   <p class= "ion-hide-"> textaaa</p>
-    <p class= "d-block"> taaaa</p>
-  </div>  -->
-
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+<ion-footer *ngIf="currentTrack">
+  <ion-toolbar color="none">
+    <ion-item lines="none" class="player-footer">
+      <ion-label>
+        <h2>{{ currentTrack.name }}</h2>
+        <p>{{ currentTrack.album || 'Álbum desconocido' }}</p>
+      </ion-label>
+<ion-button fill="clear" color="light" (click)="togglePlayPause()" style="font-size: 25px;">
+  {{ isPlaying ? '⏸️' : '▶️' }}
+</ion-button>
+    </ion-item>
+    <ion-range min="0" max="100" [value]="progress" color="light" disabled></ion-range>
+  </ion-toolbar>
+</ion-footer>

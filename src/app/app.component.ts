@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterOutlet } from '@angular/router';
 import { register } from 'swiper/element/bundle';
 import { StorageService } from './services/storage.service';
+import { discOutline } from 'ionicons/icons';
 
 // Ionic
 import {
@@ -26,6 +27,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 // Iconos
 import { addIcons } from 'ionicons';
 import { homeOutline, peopleOutline, informationCircleOutline, searchOutline, logInOutline } from 'ionicons/icons';
+addIcons({ homeOutline, peopleOutline, informationCircleOutline, searchOutline, logInOutline, discOutline });
 
 register();
 
@@ -60,15 +62,16 @@ export class AppComponent implements OnInit {
   isRegisterPage = false;
 
   public appPages = [
-    { title: 'Home', url: '/home', icon: 'homeOutline' },
-    { title: 'Héroes', url: '/heroes', icon: 'peopleOutline' },
-    { title: 'Acerca de', url: '/about', icon: 'informationCircleOutline' },
-    { title: 'Login', url: '/login', icon: 'log-in-outline' },
-  ];
+  { title: 'Home', url: '/home', icon: 'home-outline' },
+  { title: 'Álbumes', url: '/albums', icon: 'albums-outline' },
+  { title: 'Login', url: '/login', icon: 'log-in-outline' },
+];
+
 
   constructor(
     private router: Router,
     private storageService: StorageService
+    
   ) {
     addIcons({ homeOutline, peopleOutline, informationCircleOutline, searchOutline, logInOutline });
 
@@ -113,5 +116,7 @@ export class AppComponent implements OnInit {
     if (loggedIn && (current === '/' || current.startsWith('/intro') || current.startsWith('/login'))) {
       this.router.navigateByUrl('/home', { replaceUrl: true });
     }
+    
   }
+  
 }

@@ -8,8 +8,9 @@ export const introGuard: CanActivateFn = async () => {
 
   const seen = await storage.get('intro_visto');
   if (!seen) {
-    router.navigateByUrl('/intro', { replaceUrl: true });
-    return false;
+    return true; // puede ver la intro
   }
-  return true;
+
+  router.navigateByUrl('/login', { replaceUrl: true });
+  return false;
 };

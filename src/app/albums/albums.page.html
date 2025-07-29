@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Álbumes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2 class="section-title">Explora Álbumes</h2>
+  <swiper-container slides-per-view="2" space-between="20">
+    <swiper-slide *ngFor="let album of albums">
+      <div class="slide-content">
+        <img [src]="album.image || 'assets/img/logo2.PNG'" alt="{{ album.name }}" class="slide-image"/>
+        <p>{{ album.name }}</p>
+        <p>{{ album.artist }}</p>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</ion-content>

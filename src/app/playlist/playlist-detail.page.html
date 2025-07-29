@@ -1,23 +1,93 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{ playlistName || 'Playlist' }}</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+  ⬅️
+</ion-button>
+    </ion-buttons>
+    <ion-title>{{ artistName }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list *ngIf="songs.length > 0; else noSongs">
-    <ion-item *ngFor="let song of songs">
+<ion-content fullscreen>
+  
+  <!-- LOADING -->
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando canciones...</p>
+  </div>
+
+  <!-- LISTA DE CANCIONES -->
+  <ion-list *ngIf="!loading">
+    <ion-list-header>
       <ion-label>
-        <h2>{{ song.title }}</h2>
-        <p>{{ song.artist }}</p>
+        <h2>Canciones de {{ artistName }}</h2>
+        <p>{{ tracks.length }} canciones disponibles</p>
       </ion-label>
-      <ion-button fill="clear" color="primary" slot="end">
-        {{ song.duration }}
-      </ion-button>
+    </ion-list-header>
+
+<ion-item class="song-item" *ngFor="let track of tracks; let i = index">
+      <!-- Número de pista -->
+      <ion-avatar slot="start">
+        <div class="track-number">{{ i + 1 }}</div>
+      </ion-avatar>
+      
+      <!-- Información de la canción -->
+      <ion-label>
+        <h2>{{ track.name }}</h2>
+        <p>{{ track.album || 'Álbum desconocido' }}</p>
+        <!-- Duración si está disponible -->
+        <ion-note *ngIf="track.duration">{{ track.duration }}</ion-note>
+      </ion-label>
+      
+      <!-- Botones de acción -->
+      <ion-buttons slot="end">
+        <!-- Botón favorito -->
+       <ion-button fill="clear" [color]="isFavorite(track) ? 'danger' : 'medium'" (click)="toggleFavorite(track)">
+  {{ isFavorite(track) ? '❤️' : '🤍' }}
+</ion-button>
+        <!-- Botón reproducir/pausa -->
+        <ion-button 
+          fill="clear" 
+          color="primary"
+          (click)="playTrack(track)"
+          [disabled]="!track.preview_url">
+            {{ currentTrack?.id === track.id && isPlaying ? '⏸️' : '▶️' }}
+</ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 
-  <ng-template #noSongs>
-    <p>No hay canciones disponibles.</p>
-  </ng-template>
+  <!-- Mensaje cuando no hay preview disponible -->
+  <ion-card *ngIf="!loading && tracks.length > 0" class="ion-margin">
+    <ion-card-content>
+      <ion-note>
+  ℹ️ Algunas canciones pueden no tener preview disponible
+</ion-note>
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
+<ion-footer *ngIf="currentTrack">
+  <ion-toolbar style="--background: #111; color: white;">
+    <ion-item lines="none" style="--background: transparent; justify-content: space-between; align-items: center;">
+      <ion-label>
+        <h2 style="color: white; font-size: 1rem;">{{ currentTrack.name }}</h2>
+        <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">
+          {{ currentTrack.album || 'Álbum desconocido' }}
+        </p>
+      </ion-label>
+
+      <!-- Contenedor de botones más compacto -->
+      <div style="display: flex; align-items: center; gap: 8px; margin-left: 8px;">
+        <ion-button fill="clear" color="light" style="font-size: 22px; padding: 0 6px;">⏮️</ion-button>
+        <ion-button fill="clear" color="light" style="font-size: 26px; padding: 0 6px;" (click)="togglePlayPause()">
+          {{ isPlaying ? '⏸️' : '▶️' }}
+        </ion-button>
+        <ion-button fill="clear" color="light" style="font-size: 22px; padding: 0 6px;">⏭️</ion-button>
+      </div>
+    </ion-item>
+
+    <ion-range min="0" max="100" [value]="progress" color="light" disabled></ion-range>
+  </ion-toolbar>
+</ion-footer>
